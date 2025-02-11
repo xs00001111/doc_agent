@@ -10,6 +10,7 @@ from browser_use.browser.browser import Browser, BrowserConfig
 browser = Browser(
     config=BrowserConfig(
         chrome_instance_path=None,  # Let the library handle launching Chromium
+        headless=True,
     )
 )
 
