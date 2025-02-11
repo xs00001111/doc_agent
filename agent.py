@@ -4,20 +4,14 @@ import gradio as gr
 from langchain_openai import ChatOpenAI
 from browser_use import Agent
 from browser_use.browser.browser import Browser, BrowserConfig
-from playwright.sync_api import sync_playwright
 
-def get_chromium_path():
-    # Use Playwright to get the path for the installed Chromium browser.
-    with sync_playwright() as playwright:
-        return playwright.chromium.executable_path
-
-# Retrieve the Chromium executable path installed by Playwright.
-chrome_path = get_chromium_path()
-
-# Set up the browser configuration with the dynamic Chromium path.
+# Set up the browser configuration without forcing a chrome_instance_path.
+# This tells the library to use Playwright’s built-in browser launching,
+# which will launch a new headless Chromium instance.
 browser = Browser(
     config=BrowserConfig(
-        chrome_instance_path=chrome_path,
+        # Remove the manual path so that a new instance is launched automatically.
+        chrome_instance_path=None,
     )
 )
 
@@ -47,7 +41,7 @@ async def ai_summaries(doc_link):
     task_description = (
         f'Open {doc_link} and read each page, Summarize this contract, including an easy to understand '
         'summary of all the key legal points and not just the terms of the contract (parties, dates, payments, etc). '
-        'Comment your summary and explaination on page 1'
+        'Comment your summary and explanation on page 1'
     )
 
     # Initialize the agent for AI summaries
