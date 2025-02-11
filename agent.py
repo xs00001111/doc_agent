@@ -4,11 +4,20 @@ import gradio as gr
 from langchain_openai import ChatOpenAI
 from browser_use import Agent
 from browser_use.browser.browser import Browser, BrowserConfig
+from playwright.sync_api import sync_playwright
 
-# Set up the browser configuration
+def get_chromium_path():
+    # Use Playwright to get the path for the installed Chromium browser.
+    with sync_playwright() as playwright:
+        return playwright.chromium.executable_path()
+
+# Retrieve the Chromium executable path installed by Playwright.
+chrome_path = get_chromium_path()
+
+# Set up the browser configuration with the dynamic Chromium path.
 browser = Browser(
     config=BrowserConfig(
-        chrome_instance_path='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        chrome_instance_path=chrome_path,
     )
 )
 
@@ -123,7 +132,6 @@ def create_ui():
             )
 
     return interface
-
 
 # Create and launch the UI
 demo = create_ui()
