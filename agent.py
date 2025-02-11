@@ -35,7 +35,11 @@ async def fill_content(doc_link, replacements):
 
 # Generate AI summaries and comments for the document
 async def ai_summaries(doc_link):
-    task_description = f'Open {doc_link} and read each page, Summarize this contract, including an easy to understand summary of all the key legal points and not just the terms of the contract (parties, dates, payments, etc). Comment your summary and explaination on page 1'
+    task_description = (
+        f'Open {doc_link} and read each page, Summarize this contract, including an easy to understand '
+        'summary of all the key legal points and not just the terms of the contract (parties, dates, payments, etc). '
+        'Comment your summary and explaination on page 1'
+    )
 
     # Initialize the agent for AI summaries
     agent = Agent(
@@ -52,8 +56,7 @@ async def ai_summaries(doc_link):
 
 # Custom Task Handling
 async def handle_custom_task(doc_link, custom_task):
-    task_description = f'{custom_task} in document {doc_link}'
-    task_description += '.'
+    task_description = f'{custom_task} in document {doc_link}.'
 
     # Initialize the agent for custom task
     agent = Agent(
@@ -124,5 +127,10 @@ def create_ui():
 
 # Create and launch the UI
 demo = create_ui()
+
+# Get the port from the environment variable, defaulting to 7860 for local testing
+port = int(os.environ.get("PORT", 7860))
+
+# Launch the Gradio app, binding to 0.0.0.0 and the specified port
 demo.queue()  # Enable queuing for concurrent requests
-demo.launch(share=True)
+demo.launch(server_name="0.0.0.0", server_port=port, share=True)
