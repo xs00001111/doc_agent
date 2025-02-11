@@ -9,7 +9,7 @@ from playwright.sync_api import sync_playwright
 def get_chromium_path():
     # Use Playwright to get the path for the installed Chromium browser.
     with sync_playwright() as playwright:
-        return playwright.chromium.executable_path()
+        return playwright.chromium.executable_path
 
 # Retrieve the Chromium executable path installed by Playwright.
 chrome_path = get_chromium_path()
