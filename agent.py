@@ -5,13 +5,11 @@ from langchain_openai import ChatOpenAI
 from browser_use import Agent
 from browser_use.browser.browser import Browser, BrowserConfig
 
-# Set up the browser configuration without forcing a chrome_instance_path.
-# This tells the library to use Playwright’s built-in browser launching,
-# which will launch a new headless Chromium instance.
+# Set up the browser configuration without the unsupported launch_options parameter.
+# By setting chrome_instance_path to None, the library will launch a new browser instance using default options.
 browser = Browser(
     config=BrowserConfig(
-        # Remove the manual path so that a new instance is launched automatically.
-        chrome_instance_path=None,
+        chrome_instance_path=None,  # Let the library handle launching Chromium
     )
 )
 
