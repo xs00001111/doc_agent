@@ -120,8 +120,9 @@ def create_ui():
             )
 
     return interface
+port = int(os.environ.get("PORT", 7860))
 
 # Create and launch the UI
 demo = create_ui()
 demo.queue()  # Enable queuing for concurrent requests
-demo.launch(share=True)
+demo.launch(server_port=port, share=True)
